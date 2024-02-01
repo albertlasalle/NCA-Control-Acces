@@ -104,17 +104,22 @@
 
                     //alert(content);
 
-                        $.post("/VerificarEntrada", {token: content}, function (response) {
+                    $.post("/VerificarEntrada", { token: content }, function(response) {
+                        if (response) {
+                            alert("Entrada validada");
+                            $.ajax({
+                                url: "/delete/" + content,
+                                type: "DELETE",
 
-                            if (response) {
-
-                                alert("Entrada validada");
-
-                            } else {
-
-                                alert("Entrada no valida");
-                            }
-                        });
+                                error: function(deleteError) {
+                                    console.error("Error al eliminar:", deleteError);
+                                    // Puedes manejar el error de eliminación aquí
+                                }
+                            });
+                        } else {
+                            alert("Entrada no válida");
+                        }
+                    });
 
                     //window.location.href=content;
                 });

@@ -97,6 +97,7 @@ public class MainController {
     }
 
     @DeleteMapping("/delete/{token}")
+    @ResponseBody
     public String deleteTicket(@PathVariable("token") String token, Model model) {
         Tickets ticket = repository.findById(token).orElseThrow(() -> new IllegalArgumentException("Invalid ticket Token:" + token));
         repository.delete(ticket);
