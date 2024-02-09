@@ -1,0 +1,4 @@
+com\crni99\qrcodegenerator\service\QRCodeService.class
+com\crni99\qrcodegenerator\config\WebConfig.class
+com\crni99\qrcodegenerator\QrCodeGeneratorApplication.class
+com\crni99\qrcodegenerator\controller\MainController.class
