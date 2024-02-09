@@ -10,22 +10,24 @@ public class Usuaris {
     @Column(name = "id")
     private int id;
     @Basic
+    @Column(name = "dni")
+    private String dni;
+    @Basic
     @Column(name = "nom")
     private String nom;
-    @Basic
-    @Column(name = "correu")
-    private String correu;
     @Basic
     @Column(name = "edat")
     private int edat;
     @Basic
+    @Column(name = "correu")
+    private String correu;
+    @Basic
     @Column(name = "telefon")
     private int telefon;
-    @Basic
-    @Column(name = "contrasenya")
-    private String contrasenya;
     @OneToMany(mappedBy = "usuarisByIdUsuari")
     private Collection<Tickets> ticketsById;
+    @OneToMany(mappedBy = "usuarisByIdUsuari_0")
+    private Collection<Tickets> ticketsById_0;
 
     public int getId() {
         return id;
@@ -33,6 +35,14 @@ public class Usuaris {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getNom() {
@@ -43,14 +53,6 @@ public class Usuaris {
         this.nom = nom;
     }
 
-    public String getCorreu() {
-        return correu;
-    }
-
-    public void setCorreu(String correu) {
-        this.correu = correu;
-    }
-
     public int getEdat() {
         return edat;
     }
@@ -59,20 +61,20 @@ public class Usuaris {
         this.edat = edat;
     }
 
+    public String getCorreu() {
+        return correu;
+    }
+
+    public void setCorreu(String correu) {
+        this.correu = correu;
+    }
+
     public int getTelefon() {
         return telefon;
     }
 
     public void setTelefon(int telefon) {
         this.telefon = telefon;
-    }
-
-    public String getContrasenya() {
-        return contrasenya;
-    }
-
-    public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
     }
 
     @Override
@@ -85,9 +87,9 @@ public class Usuaris {
         if (id != usuaris.id) return false;
         if (edat != usuaris.edat) return false;
         if (telefon != usuaris.telefon) return false;
+        if (dni != null ? !dni.equals(usuaris.dni) : usuaris.dni != null) return false;
         if (nom != null ? !nom.equals(usuaris.nom) : usuaris.nom != null) return false;
         if (correu != null ? !correu.equals(usuaris.correu) : usuaris.correu != null) return false;
-        if (contrasenya != null ? !contrasenya.equals(usuaris.contrasenya) : usuaris.contrasenya != null) return false;
 
         return true;
     }
@@ -95,11 +97,11 @@ public class Usuaris {
     @Override
     public int hashCode() {
         int result = id;
+        result = 31 * result + (dni != null ? dni.hashCode() : 0);
         result = 31 * result + (nom != null ? nom.hashCode() : 0);
-        result = 31 * result + (correu != null ? correu.hashCode() : 0);
         result = 31 * result + edat;
+        result = 31 * result + (correu != null ? correu.hashCode() : 0);
         result = 31 * result + telefon;
-        result = 31 * result + (contrasenya != null ? contrasenya.hashCode() : 0);
         return result;
     }
 
@@ -109,5 +111,13 @@ public class Usuaris {
 
     public void setTicketsById(Collection<Tickets> ticketsById) {
         this.ticketsById = ticketsById;
+    }
+
+    public Collection<Tickets> getTicketsById_0() {
+        return ticketsById_0;
+    }
+
+    public void setTicketsById_0(Collection<Tickets> ticketsById_0) {
+        this.ticketsById_0 = ticketsById_0;
     }
 }

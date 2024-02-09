@@ -12,8 +12,11 @@ public class Partits {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "nom")
-    private String nom;
+    @Column(name = "partit")
+    private String partit;
+    @Basic
+    @Column(name = "preu")
+    private int preu;
     @Basic
     @Column(name = "poblacio")
     private String poblacio;
@@ -21,8 +24,8 @@ public class Partits {
     @Column(name = "dia")
     private Date dia;
     @Basic
-    @Column(name = "hora_começa")
-    private Time horaComeça;
+    @Column(name = "hora_inici")
+    private Time horaInici;
     @Basic
     @Column(name = "hora_acaba")
     private Time horaAcaba;
@@ -37,12 +40,20 @@ public class Partits {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getPartit() {
+        return partit;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setPartit(String partit) {
+        this.partit = partit;
+    }
+
+    public int getPreu() {
+        return preu;
+    }
+
+    public void setPreu(int preu) {
+        this.preu = preu;
     }
 
     public String getPoblacio() {
@@ -61,12 +72,12 @@ public class Partits {
         this.dia = dia;
     }
 
-    public Time getHoraComeça() {
-        return horaComeça;
+    public Time getHoraInici() {
+        return horaInici;
     }
 
-    public void setHoraComeça(Time horaComeça) {
-        this.horaComeça = horaComeça;
+    public void setHoraInici(Time horaInici) {
+        this.horaInici = horaInici;
     }
 
     public Time getHoraAcaba() {
@@ -85,10 +96,11 @@ public class Partits {
         Partits partits = (Partits) o;
 
         if (id != partits.id) return false;
-        if (nom != null ? !nom.equals(partits.nom) : partits.nom != null) return false;
+        if (preu != partits.preu) return false;
+        if (partit != null ? !partit.equals(partits.partit) : partits.partit != null) return false;
         if (poblacio != null ? !poblacio.equals(partits.poblacio) : partits.poblacio != null) return false;
         if (dia != null ? !dia.equals(partits.dia) : partits.dia != null) return false;
-        if (horaComeça != null ? !horaComeça.equals(partits.horaComeça) : partits.horaComeça != null) return false;
+        if (horaInici != null ? !horaInici.equals(partits.horaInici) : partits.horaInici != null) return false;
         if (horaAcaba != null ? !horaAcaba.equals(partits.horaAcaba) : partits.horaAcaba != null) return false;
 
         return true;
@@ -97,10 +109,11 @@ public class Partits {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (nom != null ? nom.hashCode() : 0);
+        result = 31 * result + (partit != null ? partit.hashCode() : 0);
+        result = 31 * result + preu;
         result = 31 * result + (poblacio != null ? poblacio.hashCode() : 0);
         result = 31 * result + (dia != null ? dia.hashCode() : 0);
-        result = 31 * result + (horaComeça != null ? horaComeça.hashCode() : 0);
+        result = 31 * result + (horaInici != null ? horaInici.hashCode() : 0);
         result = 31 * result + (horaAcaba != null ? horaAcaba.hashCode() : 0);
         return result;
     }
