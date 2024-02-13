@@ -50,7 +50,7 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/">Tickets
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="/decode">Decode</a></li>
+				<li class="nav-item"><a class="nav-link" href="/decode">Validar Entrades</a></li>
 
 				<li class="nav-item"><a class="nav-link" href="/partits">Crear Partits</a></li>
 
@@ -77,7 +77,7 @@
 
 		<input type="hidden" id="inputText" name="text">
 
-		<input type="hidden" class="form-control" id="id_partit"  name="id_partit"  value="" data-inputmask="'alias': 'id_partit'" autocomplete="off" required />
+		<input type="hidden" class="form-control" id="id_partit"  name="id_partit"  th:value="${idPartit}" data-inputmask="'alias': 'id_partit'"  autocomplete="off" required />
 
 		<label for="id_usuari" class="col-sm-4 col-form-label">Id de Usuari</label>
 		<div class="col-sm-8">
@@ -97,7 +97,7 @@
 
 
 		<button type="submit" class="btn btn-primary"
-				style="margin-top: 10px;" onclick="document.getElementById('inputText').value = generateRandomString(10);">Generate QR Code</button>
+				style="margin-top: 10px;" onclick="document.getElementById('inputText').value = generateRandomString(10);">Comprar Ticket</button>
 	</form>
 
 
@@ -117,6 +117,7 @@
 			</div>
 		</div>
 	</th:block>
+
 </div>
 
 <script>
