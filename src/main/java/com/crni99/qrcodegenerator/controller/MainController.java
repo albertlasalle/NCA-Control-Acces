@@ -3,10 +3,13 @@ package com.crni99.qrcodegenerator.controller;
 import java.io.IOException;
 import java.sql.Date;
 
+import java.sql.Time;
 import java.util.List;
 
 
+import com.crni99.qrcodegenerator.Repository.PartitsRepository;
 import com.crni99.qrcodegenerator.Repository.TicketsRepository;
+import com.crni99.qrcodegenerator.model.Partits;
 import com.crni99.qrcodegenerator.model.Tickets;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +27,14 @@ public class MainController {
 
     private final TicketsRepository repository;
 
-    public MainController(QRCodeService qrCodeService, TicketsRepository repository) {
+    private final PartitsRepository partitsRepository;
+
+
+
+    public MainController(QRCodeService qrCodeService, TicketsRepository repository, PartitsRepository partitsRepository) {
         this.qrCodeService = qrCodeService;
         this.repository = repository;
+        this.partitsRepository = partitsRepository;
     }
 
 
@@ -34,6 +42,12 @@ public class MainController {
     public String home(Model model) {
         model.addAttribute("tickets", new Tickets());
         return "index";
+    }
+
+    @GetMapping("/partits")
+    public String partits(Model model) {
+        model.addAttribute("partits", new Partits());
+        return "partits";
     }
 
     @PostMapping("/generate")
@@ -53,6 +67,29 @@ public class MainController {
 
         return "index";
     }
+
+    @PostMapping("/createPartits")
+    public String createPartit(@RequestParam("nomPartit") String nomPartit, @RequestParam("preu") int preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, Partits partits) {
+        if (nomPartit == null || nomPartit.isBlank() || nomPartit.isEmpty()) {
+            return "redirect:/partits";
+        }
+
+        System.out.println(horaInici);
+        System.out.println(horaFi);
+
+        partits.setPartit(nomPartit);
+        partits.setPreu(preu);
+        partits.setPoblacio(poblacio);
+        partits.setDia(dia);
+        partits.setHoraInici(Time.valueOf(horaInici+":00"));
+        partits.setHoraAcaba(Time.valueOf(horaFi+":00"));
+        partitsRepository.save(partits);
+
+        return "partits";
+    }
+
+
+
 
     @GetMapping("/decode")
     public String decodeQRCode() {
