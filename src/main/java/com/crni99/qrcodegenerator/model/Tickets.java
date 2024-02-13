@@ -25,7 +25,7 @@ public class Tickets {
     @JoinColumn(name = "id_usuari", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Usuaris usuarisByIdUsuari;
     @ManyToOne
-    @JoinColumn(name = "id_usuari", referencedColumnName = "id", nullable = false,  insertable = false, updatable = false)
+    @JoinColumn(name = "id_usuari", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Usuaris usuarisByIdUsuari_0;
 
     public String getToken() {
