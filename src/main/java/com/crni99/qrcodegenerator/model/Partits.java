@@ -2,7 +2,6 @@ package com.crni99.qrcodegenerator.model;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Time;
 import java.util.Collection;
 
 @Entity
@@ -25,10 +24,10 @@ public class Partits {
     private Date dia;
     @Basic
     @Column(name = "hora_inici")
-    private Time horaInici;
+    private String horaInici;
     @Basic
     @Column(name = "hora_acaba")
-    private Time horaAcaba;
+    private String horaAcaba;
     @OneToMany(mappedBy = "partitsByIdPartit")
     private Collection<Tickets> ticketsById;
 
@@ -72,19 +71,19 @@ public class Partits {
         this.dia = dia;
     }
 
-    public Time getHoraInici() {
+    public String getHoraInici() {
         return horaInici;
     }
 
-    public void setHoraInici(Time horaInici) {
+    public void setHoraInici(String horaInici) {
         this.horaInici = horaInici;
     }
 
-    public Time getHoraAcaba() {
+    public String getHoraAcaba() {
         return horaAcaba;
     }
 
-    public void setHoraAcaba(Time horaAcaba) {
+    public void setHoraAcaba(String horaAcaba) {
         this.horaAcaba = horaAcaba;
     }
 

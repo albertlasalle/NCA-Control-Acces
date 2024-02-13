@@ -3,7 +3,6 @@ package com.crni99.qrcodegenerator.controller;
 import java.io.IOException;
 import java.sql.Date;
 
-import java.sql.Time;
 import java.util.List;
 
 
@@ -47,7 +46,7 @@ public class MainController {
     @GetMapping("/partits")
     public String partits(Model model) {
         model.addAttribute("partits", new Partits());
-        return "partits";
+        return "CrearPartits";
     }
 
     @PostMapping("/generate")
@@ -81,11 +80,11 @@ public class MainController {
         partits.setPreu(preu);
         partits.setPoblacio(poblacio);
         partits.setDia(dia);
-        partits.setHoraInici(Time.valueOf(horaInici+":00"));
-        partits.setHoraAcaba(Time.valueOf(horaFi+":00"));
+        partits.setHoraInici(horaInici);
+        partits.setHoraAcaba(horaFi);
         partitsRepository.save(partits);
 
-        return "partits";
+        return "CrearPartits";
     }
 
 
