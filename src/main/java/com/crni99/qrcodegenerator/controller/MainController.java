@@ -28,6 +28,8 @@ public class MainController {
 
     private final PartitsRepository partitsRepository;
 
+    public static int idPartit;
+
 
 
     public MainController(QRCodeService qrCodeService, TicketsRepository repository, PartitsRepository partitsRepository) {
@@ -40,6 +42,9 @@ public class MainController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("tickets", new Tickets());
+        List<Partits> listaDePartits = partitsRepository.findAll();
+        model.addAttribute("partits", listaDePartits);
+
         return "index";
     }
 
@@ -67,6 +72,14 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/comprar/partit/{id}")
+    public String comprarPartit(@PathVariable("id") int id, Model model) {
+        Partits partit = partitsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid partit Id:" + id));
+        model.addAttribute("idPartit", id);
+        idPartit = partit.getId();
+        return "ComprarTicket";
+    }
+
     @PostMapping("/createPartits")
     public String createPartit(@RequestParam("nomPartit") String nomPartit, @RequestParam("preu") int preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, Partits partits) {
         if (nomPartit == null || nomPartit.isBlank() || nomPartit.isEmpty()) {
@@ -84,7 +97,7 @@ public class MainController {
         partits.setHoraAcaba(horaFi);
         partitsRepository.save(partits);
 
-        return "CrearPartits";
+        return "index";
     }
 
 

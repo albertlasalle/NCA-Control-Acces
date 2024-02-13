@@ -16,6 +16,9 @@ public class Tickets {
     @Column(name = "id_usuari")
     private int idUsuari;
     @Basic
+    @Column(name = "correu")
+    private String correu;
+    @Basic
     @Column(name = "data_compra")
     private Date dataCompra;
     @ManyToOne
@@ -52,6 +55,14 @@ public class Tickets {
         this.idUsuari = idUsuari;
     }
 
+    public String getCorreu() {
+        return correu;
+    }
+
+    public void setCorreu(String correu) {
+        this.correu = correu;
+    }
+
     public Date getDataCompra() {
         return dataCompra;
     }
@@ -70,6 +81,7 @@ public class Tickets {
         if (idPartit != tickets.idPartit) return false;
         if (idUsuari != tickets.idUsuari) return false;
         if (token != null ? !token.equals(tickets.token) : tickets.token != null) return false;
+        if (correu != null ? !correu.equals(tickets.correu) : tickets.correu != null) return false;
         if (dataCompra != null ? !dataCompra.equals(tickets.dataCompra) : tickets.dataCompra != null) return false;
 
         return true;
@@ -80,6 +92,7 @@ public class Tickets {
         int result = token != null ? token.hashCode() : 0;
         result = 31 * result + idPartit;
         result = 31 * result + idUsuari;
+        result = 31 * result + (correu != null ? correu.hashCode() : 0);
         result = 31 * result + (dataCompra != null ? dataCompra.hashCode() : 0);
         return result;
     }
