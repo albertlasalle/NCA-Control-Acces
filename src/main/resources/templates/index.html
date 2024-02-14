@@ -65,7 +65,7 @@
 		<thead>
 		<tr>
 			<th>Nom del Partit:</th>
-			<th>Preu: (Euros)</th>
+			<th>Preu:</th>
 			<th>Població:</th>
 			<th>Día:</th>
 			<th>Hora Comença:</th>
@@ -76,7 +76,7 @@
 		<tbody>
 		<tr th:each="partit : ${partits}">
 			<td th:text="${partit.partit}"></td>
-			<td th:text="${partit.preu}"></td>
+			<td th:text="${partit.preu} + '€'"></td>
 			<td th:text="${partit.poblacio}"></td>
 			<td th:text="${partit.dia}"></td>
 			<td th:text="${partit.horaInici}"></td>
