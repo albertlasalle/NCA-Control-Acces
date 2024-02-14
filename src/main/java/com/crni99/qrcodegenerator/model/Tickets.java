@@ -13,23 +13,20 @@ public class Tickets {
     @Column(name = "id_partit")
     private int idPartit;
     @Basic
-    @Column(name = "id_usuari")
-    private int idUsuari;
+    @Column(name = "dni_usuari")
+    private String dniUsuari;
     @Basic
     @Column(name = "correu")
     private String correu;
+    @Basic
+    @Column(name = "telefon_movil")
+    private int telefonMovil;
     @Basic
     @Column(name = "data_compra")
     private Date dataCompra;
     @ManyToOne
     @JoinColumn(name = "id_partit", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Partits partitsByIdPartit;
-    @ManyToOne
-    @JoinColumn(name = "id_usuari", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private Usuaris usuarisByIdUsuari;
-    @ManyToOne
-    @JoinColumn(name = "id_usuari", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private Usuaris usuarisByIdUsuari_0;
 
     public String getToken() {
         return token;
@@ -47,12 +44,12 @@ public class Tickets {
         this.idPartit = idPartit;
     }
 
-    public int getIdUsuari() {
-        return idUsuari;
+    public String getDniUsuari() {
+        return dniUsuari;
     }
 
-    public void setIdUsuari(int idUsuari) {
-        this.idUsuari = idUsuari;
+    public void setDniUsuari(String dniUsuari) {
+        this.dniUsuari = dniUsuari;
     }
 
     public String getCorreu() {
@@ -61,6 +58,14 @@ public class Tickets {
 
     public void setCorreu(String correu) {
         this.correu = correu;
+    }
+
+    public int getTelefonMovil() {
+        return telefonMovil;
+    }
+
+    public void setTelefonMovil(int telefonMovil) {
+        this.telefonMovil = telefonMovil;
     }
 
     public Date getDataCompra() {
@@ -79,8 +84,9 @@ public class Tickets {
         Tickets tickets = (Tickets) o;
 
         if (idPartit != tickets.idPartit) return false;
-        if (idUsuari != tickets.idUsuari) return false;
+        if (telefonMovil != tickets.telefonMovil) return false;
         if (token != null ? !token.equals(tickets.token) : tickets.token != null) return false;
+        if (dniUsuari != null ? !dniUsuari.equals(tickets.dniUsuari) : tickets.dniUsuari != null) return false;
         if (correu != null ? !correu.equals(tickets.correu) : tickets.correu != null) return false;
         if (dataCompra != null ? !dataCompra.equals(tickets.dataCompra) : tickets.dataCompra != null) return false;
 
@@ -91,8 +97,9 @@ public class Tickets {
     public int hashCode() {
         int result = token != null ? token.hashCode() : 0;
         result = 31 * result + idPartit;
-        result = 31 * result + idUsuari;
+        result = 31 * result + (dniUsuari != null ? dniUsuari.hashCode() : 0);
         result = 31 * result + (correu != null ? correu.hashCode() : 0);
+        result = 31 * result + telefonMovil;
         result = 31 * result + (dataCompra != null ? dataCompra.hashCode() : 0);
         return result;
     }
@@ -103,21 +110,5 @@ public class Tickets {
 
     public void setPartitsByIdPartit(Partits partitsByIdPartit) {
         this.partitsByIdPartit = partitsByIdPartit;
-    }
-
-    public Usuaris getUsuarisByIdUsuari() {
-        return usuarisByIdUsuari;
-    }
-
-    public void setUsuarisByIdUsuari(Usuaris usuarisByIdUsuari) {
-        this.usuarisByIdUsuari = usuarisByIdUsuari;
-    }
-
-    public Usuaris getUsuarisByIdUsuari_0() {
-        return usuarisByIdUsuari_0;
-    }
-
-    public void setUsuarisByIdUsuari_0(Usuaris usuarisByIdUsuari_0) {
-        this.usuarisByIdUsuari_0 = usuarisByIdUsuari_0;
     }
 }

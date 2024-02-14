@@ -55,7 +55,7 @@ public class MainController {
     }
 
     @PostMapping("/generate")
-    public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("id_usuari") int idusuari, @RequestParam("correu") String correu) {
+    public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil) {
         if (text == null || text.isBlank() || text.isEmpty()) {
             return "redirect:/";
         }
@@ -65,8 +65,9 @@ public class MainController {
         model.addAttribute("qrcode", qrCode);
         tickets.setToken(text);
         tickets.setIdPartit(idPartit);
-        tickets.setIdUsuari(idusuari);
+        tickets.setDniUsuari(dniUsuari);
         tickets.setCorreu(correu);
+        tickets.setTelefonMovil(telefonMovil);
         tickets.setDataCompra(data_compra);
         repository.save(tickets);
 
@@ -98,7 +99,7 @@ public class MainController {
         partits.setHoraAcaba(horaFi);
         partitsRepository.save(partits);
 
-        return "index";
+        return "redirect:/";
     }
 
 

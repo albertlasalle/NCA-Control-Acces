@@ -50,7 +50,7 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/">Tickets
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="/decode">Decode</a></li>
+				<li class="nav-item"><a class="nav-link" href="/decode">Validar Entrades</a></li>
 
 				<li class="nav-item"><a class="nav-link" href="/partits">Crear Partits</a></li>
 
@@ -77,27 +77,31 @@
 
 		<input type="hidden" id="inputText" name="text">
 
-		<input type="hidden" class="form-control" id="id_partit"  name="id_partit"  value="" data-inputmask="'alias': 'id_partit'" autocomplete="off" required />
+		<input type="hidden" class="form-control" id="id_partit"  name="id_partit"  th:value="${idPartit}" data-inputmask="'alias': 'id_partit'"  autocomplete="off" required />
 
-		<label for="id_usuari" class="col-sm-4 col-form-label">Id de Usuari</label>
+		<label for="dni_usuari" class="col-sm-4 col-form-label">DNI:</label>
 		<div class="col-sm-8">
-			<input type="number" class="form-control" id="id_usuari" name="id_usuari" data-inputmask="'alias': 'id_usuari'"
+			<input type="text" class="form-control" id="dni_usuari" name="dni_usuari" data-inputmask="'alias': 'dni_usuari'"
 				   autocomplete="off" required />
 		</div>
 
-
-		<label for="correu" class="col-sm-4 col-form-label">Email</label>
+		<label for="correu" class="col-sm-4 col-form-label">Correu Electronic:</label>
 		<div class="col-sm-8">
 			<input type="email" class="form-control" id="correu" name="correu" data-inputmask="'alias': 'correu'"
 				   autocomplete="off" required />
 		</div>
 
+		<label for="telefon_movil" class="col-sm-4 col-form-label">Telefon Mobil:</label>
+		<div class="col-sm-8">
+			<input type="number" class="form-control" id="telefon_movil" name="telefon_movil" data-inputmask="'alias': 'telefon_movil'"
+				   autocomplete="off" required />
+		</div>
 
 		<input type="hidden" class="form-control" id="data_compra" name="data_compra" data-inputmask="'alias': 'data_compra'" autocomplete="off" required/>
 
 
 		<button type="submit" class="btn btn-primary"
-				style="margin-top: 10px;" onclick="document.getElementById('inputText').value = generateRandomString(10);">Generate QR Code</button>
+				style="margin-top: 10px;" onclick="document.getElementById('inputText').value = generateRandomString(10);">Comprar Ticket</button>
 	</form>
 
 
@@ -117,6 +121,7 @@
 			</div>
 		</div>
 	</th:block>
+
 </div>
 
 <script>
