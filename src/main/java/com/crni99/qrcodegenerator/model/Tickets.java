@@ -16,6 +16,12 @@ public class Tickets {
     @Column(name = "dni_usuari")
     private String dniUsuari;
     @Basic
+    @Column(name = "nom_usuari")
+    private String nomUsuari;
+    @Basic
+    @Column(name = "edat_usuari")
+    private int edatUsuari;
+    @Basic
     @Column(name = "correu")
     private String correu;
     @Basic
@@ -52,6 +58,22 @@ public class Tickets {
         this.dniUsuari = dniUsuari;
     }
 
+    public String getNomUsuari() {
+        return nomUsuari;
+    }
+
+    public void setNomUsuari(String nomUsuari) {
+        this.nomUsuari = nomUsuari;
+    }
+
+    public int getEdatUsuari() {
+        return edatUsuari;
+    }
+
+    public void setEdatUsuari(int edatUsuari) {
+        this.edatUsuari = edatUsuari;
+    }
+
     public String getCorreu() {
         return correu;
     }
@@ -84,9 +106,11 @@ public class Tickets {
         Tickets tickets = (Tickets) o;
 
         if (idPartit != tickets.idPartit) return false;
+        if (edatUsuari != tickets.edatUsuari) return false;
         if (telefonMovil != tickets.telefonMovil) return false;
         if (token != null ? !token.equals(tickets.token) : tickets.token != null) return false;
         if (dniUsuari != null ? !dniUsuari.equals(tickets.dniUsuari) : tickets.dniUsuari != null) return false;
+        if (nomUsuari != null ? !nomUsuari.equals(tickets.nomUsuari) : tickets.nomUsuari != null) return false;
         if (correu != null ? !correu.equals(tickets.correu) : tickets.correu != null) return false;
         if (dataCompra != null ? !dataCompra.equals(tickets.dataCompra) : tickets.dataCompra != null) return false;
 
@@ -98,6 +122,8 @@ public class Tickets {
         int result = token != null ? token.hashCode() : 0;
         result = 31 * result + idPartit;
         result = 31 * result + (dniUsuari != null ? dniUsuari.hashCode() : 0);
+        result = 31 * result + (nomUsuari != null ? nomUsuari.hashCode() : 0);
+        result = 31 * result + edatUsuari;
         result = 31 * result + (correu != null ? correu.hashCode() : 0);
         result = 31 * result + telefonMovil;
         result = 31 * result + (dataCompra != null ? dataCompra.hashCode() : 0);
