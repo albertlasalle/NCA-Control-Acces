@@ -73,6 +73,8 @@
 
 <div class="container-sm mt-5" style="max-width: 75%;">
 
+	<th:block th:unless="${#strings.isEmpty(idPartit)}">
+
 	<form action="/generate" method="post">
 
 		<input type="hidden" id="inputText" name="text">
@@ -117,6 +119,7 @@
 	</form>
 
 
+	</th:block>
 
 
 
