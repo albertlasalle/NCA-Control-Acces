@@ -5,7 +5,7 @@ import java.sql.Date;
 
 @Entity
 public class Tickets {
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "token")
     private String token;

@@ -6,8 +6,10 @@ import java.sql.Date;
 import java.util.List;
 
 
+import com.crni99.qrcodegenerator.Repository.AdminRepository;
 import com.crni99.qrcodegenerator.Repository.PartitsRepository;
 import com.crni99.qrcodegenerator.Repository.TicketsRepository;
+import com.crni99.qrcodegenerator.model.Admin;
 import com.crni99.qrcodegenerator.model.Partits;
 import com.crni99.qrcodegenerator.model.Tickets;
 import org.springframework.stereotype.Controller;
@@ -28,14 +30,19 @@ public class MainController {
 
     private final PartitsRepository partitsRepository;
 
+    private final AdminRepository AdminRepository;
+
+
+
     public static int idPartit;
 
 
 
-    public MainController(QRCodeService qrCodeService, TicketsRepository repository, PartitsRepository partitsRepository) {
+    public MainController(QRCodeService qrCodeService, TicketsRepository repository, PartitsRepository partitsRepository, AdminRepository AdminRepository) {
         this.qrCodeService = qrCodeService;
         this.repository = repository;
         this.partitsRepository = partitsRepository;
+        this.AdminRepository = AdminRepository;
     }
 
 
@@ -84,6 +91,31 @@ public class MainController {
         return "ComprarTicket";
     }
 
+    @GetMapping("/admin")
+    public String admin(Model model) {
+
+        model.addAttribute("admin", new Admin());
+        return "LoginAdmin";
+    }
+
+    @PostMapping("/loginAdmin")
+    public String loginAdmin(@RequestParam("user") String usuari, @RequestParam("password") String contrasenya, Model model) {
+        if (usuari == null || usuari.isBlank() || usuari.isEmpty()) {
+            return "redirect:/admin";
+        }
+        if (contrasenya == null || contrasenya.isBlank() || contrasenya.isEmpty()) {
+            return "redirect:/admin";
+        }
+        List<Admin> admins = AdminRepository.findAll();
+        for (Admin admin : admins) {
+            if (admin.getUsuari().equals(usuari) && admin.getContrasenya().equals(contrasenya)) {
+                return "index";
+            }
+        }
+        return "redirect:/admin";
+    }
+
+
     @PostMapping("/createPartits")
     public String createPartit(@RequestParam("nomPartit") String nomPartit, @RequestParam("preu") int preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, Partits partits) {
         if (nomPartit == null || nomPartit.isBlank() || nomPartit.isEmpty()) {
@@ -103,8 +135,6 @@ public class MainController {
 
         return "redirect:/";
     }
-
-
 
 
     @GetMapping("/decode")
