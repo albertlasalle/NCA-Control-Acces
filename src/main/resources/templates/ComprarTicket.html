@@ -12,16 +12,13 @@
 			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 			crossorigin="anonymous">
 
-	<title>Compra Tickets</title>
+	<title>Comprar Tickets</title>
 
 	<link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.3.2/css/bootstrap.min.css} "/>
 	<link th:rel="stylesheet" th:href="@{webjars/font-awesome/6.5.1/css/all.css} "/>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
 	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-
-	<link href="../static/img/favicon.png" th:href="@{/img/favicon.png}"
-		  rel="shortcut icon" />
 
 	<script>
 		function generateRandomString(length) {
@@ -34,12 +31,15 @@
 		}
 	</script>
 
+	<link href="../static/img/favicon.png" th:href="@{/img/favicon.png}"
+		  rel="shortcut icon" />
+
 </head>
 <body>
 <div class="container" style="max-width: 75%;">
 	<nav class="navbar navbar-expand-lg">
 		<a class="navbar-brand" href="#"> <img src="../img/favicon.png"
-											   width="30" height="30"> QR Code Generator
+											   width="30" height="30"> Comprar Entrada
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
@@ -72,6 +72,8 @@
 
 
 <div class="container-sm mt-5" style="max-width: 75%;">
+
+	<th:block th:unless="${#strings.isEmpty(idPartit)}">
 
 	<form action="/generate" method="post">
 
@@ -117,6 +119,8 @@
 	</form>
 
 
+	</th:block>
+
 
 	<th:block th:unless="${#strings.isEmpty(text)}">
 		<div class="mt-5" id="qrCodeContainer">
@@ -128,8 +132,7 @@
 					 alt="GeneratedQRCode" class="img-fluid rounded" id="qrCodeImage">
 			</div>
 			<div>
-				<button class="btn btn-primary" id="qrCodeDownload"
-						style="margin-top: 10px;">Download</button>
+				<button class="btn btn-primary" id="qrCodeDownload" style="margin-top: 10px;" onclick="window.location.href='/'"> Download </button>
 			</div>
 		</div>
 	</th:block>
