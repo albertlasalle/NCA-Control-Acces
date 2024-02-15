@@ -91,15 +91,15 @@ public class MainController {
         return "ComprarTicket";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/LoginAdmin")
     public String admin(Model model) {
 
         model.addAttribute("admin", new Admin());
         return "LoginAdmin";
     }
 
-    @PostMapping("/loginAdmin")
-    public String loginAdmin(@RequestParam("user") String usuari, @RequestParam("password") String contrasenya, Model model) {
+    @PostMapping("/admin")
+    public String loginAdmin(@RequestParam("user") String usuari, @RequestParam("password") String contrasenya) {
         if (usuari == null || usuari.isBlank() || usuari.isEmpty()) {
             return "redirect:/admin";
         }
@@ -109,7 +109,7 @@ public class MainController {
         List<Admin> admins = AdminRepository.findAll();
         for (Admin admin : admins) {
             if (admin.getUsuari().equals(usuari) && admin.getContrasenya().equals(contrasenya)) {
-                return "index";
+                return "admin";
             }
         }
         return "redirect:/admin";
