@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.crni99.qrcodegenerator.service.QRCodeService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -51,6 +52,8 @@ public class MainController {
 
     public String usuari;
 
+    public String url;
+
 
 
     @GetMapping("/")
@@ -63,13 +66,16 @@ public class MainController {
     }
 
     @GetMapping("/decode")
-    public String decodeQRCode() {
+    public String decodeQRCode(HttpServletRequest request) {
 
         String admin = (String) session.getAttribute("admin");
 
         if (admin!= null && admin.equals(usuari)) {
             return "decode";
         } else {
+
+            url = request.getRequestURI();
+            session.setAttribute("redirectUrl", url);
             return "redirect:/LoginAdmin";
         }
 
@@ -91,7 +97,7 @@ public class MainController {
 
 
     @GetMapping("/partits")
-    public String partits(Model model) {
+    public String partits(Model model, HttpServletRequest request) {
 
         String admin = (String) session.getAttribute("admin");
 
@@ -100,6 +106,9 @@ public class MainController {
             return "CrearPartits";
 
         } else {
+
+            url = request.getRequestURI();
+            session.setAttribute("redirectUrl", url);
             return "redirect:/LoginAdmin";
         }
 
@@ -170,7 +179,19 @@ public class MainController {
             if (admin.getUsuari().equals(usuari) && admin.getContrasenya().equals(contrasenya)) {
                 this.usuari = admin.getUsuari();
                 session.setAttribute("admin", this.usuari);
+
+
+                String redirectUrl = (String) session.getAttribute("redirectUrl");
+                if (redirectUrl != null) {
+                    // Eliminar la URL almacenada de la sesión
+                    session.removeAttribute("redirectUrl");
+                    return "redirect:" + redirectUrl;
+                }
+
+
                 return "admin";
+
+
             }
         }
         return "redirect:/admin";
