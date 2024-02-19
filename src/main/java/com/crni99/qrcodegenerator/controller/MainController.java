@@ -52,6 +52,7 @@ public class MainController {
     public String usuari;
 
 
+
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("tickets", new Tickets());
@@ -66,7 +67,7 @@ public class MainController {
 
         String admin = (String) session.getAttribute("admin");
 
-        if (admin.equals(usuari)) {
+        if (admin!= null && admin.equals(usuari)) {
             return "decode";
         } else {
             return "redirect:/LoginAdmin";
@@ -79,7 +80,7 @@ public class MainController {
 
         String admin = (String) session.getAttribute("admin");
 
-        if (admin.equals(usuari)) {
+        if (admin != null && admin.equals(usuari)) {
             return "decode";
         } else {
             return "redirect:/LoginAdmin";
@@ -93,27 +94,31 @@ public class MainController {
     public String partits(Model model) {
 
         String admin = (String) session.getAttribute("admin");
-        if(admin.equals(usuari)) {
+
+        if (admin != null && admin.equals(usuari)) {
             model.addAttribute("partits", new Partits());
             return "CrearPartits";
-        }else {
+
+        } else {
             return "redirect:/LoginAdmin";
         }
+
+
     }
 
     @PostMapping("/partits")
     public String Postpartits(Model model) {
 
         String admin = (String) session.getAttribute("admin");
-        if(admin.equals(usuari)) {
+        if(admin!= null && admin.equals(usuari)) {
             model.addAttribute("partits", new Partits());
             return "CrearPartits";
-        }else {
+        }else{
             return "redirect:/LoginAdmin";
         }
+
+
     }
-
-
 
 
     @PostMapping("/generate")
@@ -189,7 +194,7 @@ public class MainController {
         partits.setHoraAcaba(horaFi);
         partitsRepository.save(partits);
 
-        return "redirect:/";
+        return "CrearPartits";
     }
 
 
