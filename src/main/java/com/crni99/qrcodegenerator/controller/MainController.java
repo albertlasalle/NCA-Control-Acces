@@ -12,6 +12,7 @@ import com.crni99.qrcodegenerator.Repository.TicketsRepository;
 import com.crni99.qrcodegenerator.model.Admin;
 import com.crni99.qrcodegenerator.model.Partits;
 import com.crni99.qrcodegenerator.model.Tickets;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.crni99.qrcodegenerator.service.QRCodeService;
+
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -32,8 +35,6 @@ public class MainController {
 
     private final AdminRepository AdminRepository;
 
-
-
     public static int idPartit;
 
 
@@ -44,6 +45,11 @@ public class MainController {
         this.partitsRepository = partitsRepository;
         this.AdminRepository = AdminRepository;
     }
+
+    @Autowired
+    public HttpSession session;
+
+    public String usuari;
 
 
     @GetMapping("/")
@@ -93,7 +99,6 @@ public class MainController {
 
     @GetMapping("/LoginAdmin")
     public String admin(Model model) {
-
         model.addAttribute("admin", new Admin());
         return "LoginAdmin";
     }
@@ -109,6 +114,8 @@ public class MainController {
         List<Admin> admins = AdminRepository.findAll();
         for (Admin admin : admins) {
             if (admin.getUsuari().equals(usuari) && admin.getContrasenya().equals(contrasenya)) {
+                this.usuari = admin.getUsuari();
+                session.setAttribute("admin", this.usuari);
                 return "admin";
             }
         }
@@ -139,8 +146,36 @@ public class MainController {
 
     @GetMapping("/decode")
     public String decodeQRCode() {
-        return "decode";
+
+        String admin = (String) session.getAttribute("admin");
+
+        if (admin.equals(usuari)) {
+            return "decode";
+        } else {
+            return "redirect:/LoginAdmin";
+        }
+
     }
+
+    @PostMapping("/decode")
+    public String PostdecodeQRCode() {
+
+        String admin = (String) session.getAttribute("admin");
+
+        if (admin.equals(usuari)) {
+            return "decode";
+        } else {
+            return "redirect:/LoginAdmin";
+        }
+
+    }
+
+    @GetMapping("/logout")
+    public String invalidateSession() {
+        session.setAttribute("admin", null);
+        return "redirect:/";
+    }
+
 
     @PostMapping("/uploadQrCode")
     public String uploadQrCode(@RequestParam("qrCodeFile") MultipartFile qrCodeFile,
@@ -165,17 +200,19 @@ public class MainController {
     public Boolean verificarToken(@RequestParam("token") String token) {
 
 
-        List<Tickets> RevisarTickets = repository.findAll();
 
-        for (Tickets tickets : RevisarTickets) {
-            if (tickets.getToken().equals(token)) {
+            List<Tickets> RevisarTickets = repository.findAll();
 
-                return true;
+            for (Tickets tickets : RevisarTickets) {
+                if (tickets.getToken().equals(token)) {
 
+                    return true;
+
+                }
             }
-        }
 
-        return false;
+            return false;
+
 
     }
 
@@ -186,6 +223,11 @@ public class MainController {
         repository.delete(ticket);
         model.addAttribute("tickets", repository.findAll());
         return "redirect:/";
+    }
+
+    @GetMapping("/error")
+    public String error() {
+        return "error";
     }
 
 
