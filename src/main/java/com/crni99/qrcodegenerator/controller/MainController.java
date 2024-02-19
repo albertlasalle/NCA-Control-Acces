@@ -61,11 +61,60 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/decode")
+    public String decodeQRCode() {
+
+        String admin = (String) session.getAttribute("admin");
+
+        if (admin.equals(usuari)) {
+            return "decode";
+        } else {
+            return "redirect:/LoginAdmin";
+        }
+
+    }
+
+    @PostMapping("/decode")
+    public String PostdecodeQRCode() {
+
+        String admin = (String) session.getAttribute("admin");
+
+        if (admin.equals(usuari)) {
+            return "decode";
+        } else {
+            return "redirect:/LoginAdmin";
+        }
+
+    }
+
+
+
     @GetMapping("/partits")
     public String partits(Model model) {
-        model.addAttribute("partits", new Partits());
-        return "CrearPartits";
+
+        String admin = (String) session.getAttribute("admin");
+        if(admin.equals(usuari)) {
+            model.addAttribute("partits", new Partits());
+            return "CrearPartits";
+        }else {
+            return "redirect:/LoginAdmin";
+        }
     }
+
+    @PostMapping("/partits")
+    public String Postpartits(Model model) {
+
+        String admin = (String) session.getAttribute("admin");
+        if(admin.equals(usuari)) {
+            model.addAttribute("partits", new Partits());
+            return "CrearPartits";
+        }else {
+            return "redirect:/LoginAdmin";
+        }
+    }
+
+
+
 
     @PostMapping("/generate")
     public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil, @RequestParam("nom") String nom, @RequestParam("edat") int edat) {
@@ -144,31 +193,6 @@ public class MainController {
     }
 
 
-    @GetMapping("/decode")
-    public String decodeQRCode() {
-
-        String admin = (String) session.getAttribute("admin");
-
-        if (admin.equals(usuari)) {
-            return "decode";
-        } else {
-            return "redirect:/LoginAdmin";
-        }
-
-    }
-
-    @PostMapping("/decode")
-    public String PostdecodeQRCode() {
-
-        String admin = (String) session.getAttribute("admin");
-
-        if (admin.equals(usuari)) {
-            return "decode";
-        } else {
-            return "redirect:/LoginAdmin";
-        }
-
-    }
 
     @GetMapping("/logout")
     public String invalidateSession() {
