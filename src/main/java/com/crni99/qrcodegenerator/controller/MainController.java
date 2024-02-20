@@ -100,9 +100,11 @@ public class MainController {
         String admin = (String) session.getAttribute("admin");
 
         if (admin != null && admin.equals(usuari)) {
+
             model.addAttribute("partits", new Partits());
             List<Partits> listaDePartits = partitsRepository.findAll();
             model.addAttribute("partits", listaDePartits);
+
             return "VistaEditarPartits";
 
         }else{
@@ -113,7 +115,7 @@ public class MainController {
     }
 
     @PostMapping("/editarPartits")
-    public String PostVistaEditarPartits(Model model) {
+    public String PostVistaEditarPartits(Model model, HttpServletRequest request) {
 
         String admin = (String) session.getAttribute("admin");
 
@@ -125,6 +127,8 @@ public class MainController {
 
             return "VistaEditarPartits";
         }else{
+            url = request.getRequestURI();
+            session.setAttribute("redirectUrl", url);
             return "redirect:/LoginAdmin";
         }
     }
