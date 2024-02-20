@@ -113,6 +113,7 @@
 	</th:block>
 
 
+
 	<th:block th:unless="${#strings.isEmpty(text)}">
 		<div class="mt-5" id="qrCodeContainer">
 			<div>
@@ -124,7 +125,15 @@
 			</div>
 			<div>
 				<button class="btn btn-primary" id="qrCodeDownload" style="margin-top: 10px;" onclick="window.location.href='/'"> Download </button>
+
+				<br>
+
+				<br>
+
+				<button class="btn btn-primary" onclick="printTicket()">Imprimir Ticket</button>
 			</div>
+
+
 		</div>
 	</th:block>
 
@@ -151,6 +160,21 @@
 				});
 			});
 </script>
+<script>
+
+	function printTicket() {
+		var imgSrc = document.getElementById('qrCodeImage').src;
+		var printWindow = window.open('', '_blank');
+		printWindow.document.write('<img src="' + imgSrc + '" style="max-width:100%;">');
+		printWindow.document.close();
+		printWindow.print();
+	}
+
+</script>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>

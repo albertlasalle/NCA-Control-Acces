@@ -1,8 +1,13 @@
 package com.crni99.qrcodegenerator.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 
+import java.util.Base64;
 import java.util.List;
 
 
@@ -12,7 +17,12 @@ import com.crni99.qrcodegenerator.Repository.TicketsRepository;
 import com.crni99.qrcodegenerator.model.Admin;
 import com.crni99.qrcodegenerator.model.Partits;
 import com.crni99.qrcodegenerator.model.Tickets;
+import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.crni99.qrcodegenerator.service.QRCodeService;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -133,7 +144,41 @@ public class MainController {
         }
     }
 
+    @PostMapping("/esborrar/partit/{id}")
+    public String esborrarPartit(@PathVariable("id") int id) {
+        try{
+            partitsRepository.deleteById(id);
+        } catch (Exception e) {
+            String error = "No s'ha pogut esborrar el partit amb codi: " + id;
+            return "redirect:/prestecs?error=" + URLEncoder.encode(error, StandardCharsets.UTF_8);
+        }
+        return "redirect:/editarPartits";
+    }
 
+    @PostMapping("/editar/partit/{id}")
+    public String editarPartit(@PathVariable("id") int id, Model model) {
+        Partits partit = partitsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid partit Id:" + id));
+        model.addAttribute("partit", partit);
+        return "EditarPartits";
+    }
+
+    @PostMapping("/actualitzar/partit")
+    public String actualitzarPartit(@RequestParam("id") int id, @RequestParam("nomPartit") String nomPartit, @RequestParam("preu") int preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, Partits partits) {
+        if (nomPartit == null || nomPartit.isBlank() || nomPartit.isEmpty()) {
+            return "redirect:/editarPartits";
+        }
+
+        partits.setId(id);
+        partits.setPartit(nomPartit);
+        partits.setPreu(preu);
+        partits.setPoblacio(poblacio);
+        partits.setDia(dia);
+        partits.setHoraInici(horaInici);
+        partits.setHoraAcaba(horaFi);
+        partitsRepository.save(partits);
+
+        return "redirect:/editarPartits";
+    }
 
 
     @GetMapping("/partits")
@@ -170,6 +215,7 @@ public class MainController {
     }
 
 
+
     @PostMapping("/generate")
     public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil, @RequestParam("nom") String nom, @RequestParam("edat") int edat) {
         if (text == null || text.isBlank() || text.isEmpty()) {
@@ -179,6 +225,9 @@ public class MainController {
         String qrCode = qrCodeService.getQRCode(text);
         model.addAttribute("text", text);
         model.addAttribute("qrcode", qrCode);
+
+
+
         tickets.setToken(text);
         tickets.setIdPartit(idPartit);
         tickets.setDniUsuari(dniUsuari);
