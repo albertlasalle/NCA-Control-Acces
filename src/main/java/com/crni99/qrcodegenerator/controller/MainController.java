@@ -50,7 +50,6 @@ public class MainController {
     public static int idPartit;
 
 
-
     public MainController(QRCodeService qrCodeService, TicketsRepository repository, PartitsRepository partitsRepository, AdminRepository AdminRepository) {
         this.qrCodeService = qrCodeService;
         this.repository = repository;
@@ -65,6 +64,7 @@ public class MainController {
 
     public String url;
 
+    public int idPartitEntrada = 0;
 
 
     @GetMapping("/")
@@ -81,7 +81,7 @@ public class MainController {
 
         String admin = (String) session.getAttribute("admin");
 
-        if (admin!= null && admin.equals(usuari)) {
+        if (admin != null && admin.equals(usuari)) {
             return "decode";
         } else {
 
@@ -118,7 +118,7 @@ public class MainController {
 
             return "VistaEditarPartits";
 
-        }else{
+        } else {
             url = request.getRequestURI();
             session.setAttribute("redirectUrl", url);
             return "redirect:/LoginAdmin";
@@ -130,39 +130,41 @@ public class MainController {
 
         String admin = (String) session.getAttribute("admin");
 
-        if(admin!= null && admin.equals(usuari)) {
+        if (admin != null && admin.equals(usuari)) {
 
             model.addAttribute("partits", new Partits());
             List<Partits> listaDePartits = partitsRepository.findAll();
             model.addAttribute("partits", listaDePartits);
 
             return "VistaEditarPartits";
-        }else{
+        } else {
             url = request.getRequestURI();
             session.setAttribute("redirectUrl", url);
             return "redirect:/LoginAdmin";
         }
     }
 
-    @PostMapping("/esborrar/partit/{id}")
+    @GetMapping("/esborrar/partit/{id}")
     public String esborrarPartit(@PathVariable("id") int id) {
-        try{
+        try {
             partitsRepository.deleteById(id);
         } catch (Exception e) {
             String error = "No s'ha pogut esborrar el partit amb codi: " + id;
-            return "redirect:/prestecs?error=" + URLEncoder.encode(error, StandardCharsets.UTF_8);
+            return "redirect:/partits?error=" + URLEncoder.encode(error, StandardCharsets.UTF_8);
         }
         return "redirect:/editarPartits";
     }
 
-    @PostMapping("/editar/partit/{id}")
+    @GetMapping("/editar/partit/{id}")
     public String editarPartit(@PathVariable("id") int id, Model model) {
+
         Partits partit = partitsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid partit Id:" + id));
         model.addAttribute("partit", partit);
         return "EditarPartits";
+
     }
 
-    @PostMapping("/actualitzar/partit")
+    @PostMapping("/actualitzar/partit/{id}")
     public String actualitzarPartit(@RequestParam("id") int id, @RequestParam("nomPartit") String nomPartit, @RequestParam("preu") int preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, Partits partits) {
         if (nomPartit == null || nomPartit.isBlank() || nomPartit.isEmpty()) {
             return "redirect:/editarPartits";
@@ -197,24 +199,20 @@ public class MainController {
             return "redirect:/LoginAdmin";
         }
 
-
     }
 
     @PostMapping("/partits")
     public String Postpartits(Model model) {
 
         String admin = (String) session.getAttribute("admin");
-        if(admin!= null && admin.equals(usuari)) {
+        if (admin != null && admin.equals(usuari)) {
             model.addAttribute("partits", new Partits());
             return "CrearPartits";
-        }else{
+        } else {
             return "redirect:/LoginAdmin";
         }
 
-
     }
-
-
 
     @PostMapping("/generate")
     public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil, @RequestParam("nom") String nom, @RequestParam("edat") int edat) {
@@ -227,7 +225,6 @@ public class MainController {
         model.addAttribute("qrcode", qrCode);
 
 
-
         tickets.setToken(text);
         tickets.setIdPartit(idPartit);
         tickets.setDniUsuari(dniUsuari);
@@ -238,8 +235,11 @@ public class MainController {
         tickets.setDataCompra(data_compra);
         repository.save(tickets);
 
+        idPartitEntrada = idPartit;
+
         return "ComprarTicket";
     }
+
 
     @GetMapping("/comprar/partit/{id}")
     public String comprarPartit(@PathVariable("id") int id, Model model) {
@@ -308,7 +308,6 @@ public class MainController {
     }
 
 
-
     @GetMapping("/logout")
     public String invalidateSession() {
         session.setAttribute("admin", null);
@@ -338,21 +337,17 @@ public class MainController {
     @ResponseBody
     public Boolean verificarToken(@RequestParam("token") String token) {
 
+        List<Tickets> RevisarTickets = repository.findAll();
 
+        for (Tickets tickets : RevisarTickets) {
+            if (tickets.getToken().equals(token)) {
 
-            List<Tickets> RevisarTickets = repository.findAll();
+                return true;
 
-            for (Tickets tickets : RevisarTickets) {
-                if (tickets.getToken().equals(token)) {
-
-                    return true;
-
-                }
             }
+        }
 
-            return false;
-
-
+        return false;
     }
 
     @DeleteMapping("/delete/{token}")
