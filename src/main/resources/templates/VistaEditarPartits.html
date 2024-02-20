@@ -12,7 +12,7 @@
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
             crossorigin="anonymous">
 
-    <title>Administrador</title>
+    <title>Compra Tickets</title>
 
     <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.3.2/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{webjars/font-awesome/6.5.1/css/all.css} "/>
@@ -28,37 +28,52 @@
 <div class="container" style="max-width: 75%;">
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#"> <img src="../img/favicon.png"
-                                               width="30" height="30"> Entrades Disponibles
+                                               width="30" height="30"> Editar Partits
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarNav" aria-controls="navbarNav"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active"><a class="nav-link" href="/logout">Tickets
-                </a></li>
-                <li class="nav-item"><a class="nav-link" href="/decode">Validar Entrades</a></li>
 
-                <li class="nav-item"><a class="nav-link" href="/partits">Crear Partits</a></li>
-
-                <li class="nav-item"><a class="nav-link" href="/edtarPartits">Modificar Partits</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Tickets</a></li>
 
 
             </ul>
-
-
         </div>
     </nav>
 </div>
 
 <div class="container">
-    Benvingut Admin!
-    <br>
-    <br>
-    <button type="button" class="btn btn-primary" onclick="location.href='/logout'">Tancar Sessió</button>
+    <h2>Llista de Partits</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom del Partit:</th>
+            <th>Preu:</th>
+            <th>Població:</th>
+            <th>Día:</th>
+            <th>Hora Comença:</th>
+            <th>Hora de Acaba:</th>
+            <th>Comprar:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="partit : ${partits}">
+            <td th:text="${partit.partit}"></td>
+            <td th:text="${partit.preu} + '€'"></td>
+            <td th:text="${partit.poblacio}"></td>
+            <td th:text="${partit.dia}"></td>
+            <td th:text="${partit.horaInici}"></td>
+            <td th:text="${partit.horaAcaba}"></td>
+            <td><a th:href="@{/editar/partit/{id}(id=${partit.id})}">Editar</a></td>
+            <td><a th:href="@{/esborrar/partit/{id}(id=${partit.id})}">Esborrar</a></td>
+        </tr>
+
+        </tbody>
+    </table>
 </div>
 
 </script>
