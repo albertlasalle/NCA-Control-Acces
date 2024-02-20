@@ -2,190 +2,210 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport"
-		  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-			crossorigin="anonymous">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+            crossorigin="anonymous">
 
-	<title>Comprar Tickets</title>
+    <title>Comprar Tickets</title>
 
-	<link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.3.2/css/bootstrap.min.css} "/>
-	<link th:rel="stylesheet" th:href="@{webjars/font-awesome/6.5.1/css/all.css} "/>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-	<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.3.2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{webjars/font-awesome/6.5.1/css/all.css} "/>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css"/>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
-	<script>
-		function generateRandomString(length) {
-			var result = '';
-			var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			for (var i = 0; i < length; i++) {
-				result += characters.charAt(Math.floor(Math.random() * characters.length));
-			}
-			return result;
-		}
-	</script>
+    <script>
+        function generateRandomString(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+    </script>
 
-	<link href="../static/img/favicon.png" th:href="@{/img/favicon.png}"
-		  rel="shortcut icon" />
+    <link href="../static/img/favicon.png" th:href="@{/img/favicon.png}"
+          rel="shortcut icon"/>
 
 </head>
 <body>
 <div class="container" style="max-width: 75%;">
-	<nav class="navbar navbar-expand-lg">
-		<a class="navbar-brand" href="#"> <img src="../img/favicon.png"
-											   width="30" height="30"> Comprar Entrada
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNav" aria-controls="navbarNav"
-				aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/">Tickets
-				</a></li>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#"> <img src="../img/favicon.png"
+                                               width="30" height="30"> Comprar Entrada
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a class="nav-link" href="/">Tickets
+                </a></li>
 
-				<li class="nav-item"><a class="nav-link" href="/LoginAdmin">Admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="/LoginAdmin">Admin</a></li>
 
-			</ul>
+            </ul>
 
 
-		</div>
+        </div>
 
-	</nav>
+    </nav>
 </div>
 
 
 <div class="container-sm mt-5" style="max-width: 75%;">
 
-	<th:block th:unless="${#strings.isEmpty(idPartit)}">
+    <th:block th:unless="${#strings.isEmpty(idPartit)}">
 
-	<form action="/generate" method="post">
+        <form action="/generate" method="post">
 
-		<input type="hidden" id="inputText" name="text">
+            <input type="hidden" id="inputText" name="text">
 
-		<input type="hidden" class="form-control" id="id_partit"  name="id_partit"  th:value="${idPartit}" data-inputmask="'alias': 'id_partit'"  autocomplete="off" required />
+            <input type="hidden" class="form-control" id="id_partit" name="id_partit" th:value="${idPartit}"
+                   data-inputmask="'alias': 'id_partit'" autocomplete="off" required/>
 
-		<label for="dni_usuari" class="col-sm-4 col-form-label">DNI:</label>
-		<div class="col-sm-8">
-			<input type="text" class="form-control" id="dni_usuari" name="dni_usuari" data-inputmask="'alias': 'dni_usuari'"
-				   autocomplete="off" required />
-		</div>
+            <label for="dni_usuari" class="col-sm-4 col-form-label">DNI:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="dni_usuari" name="dni_usuari"
+                       data-inputmask="'alias': 'dni_usuari'"
+                       autocomplete="off" required/>
+            </div>
 
-		<label for="nom" class="col-sm-4 col-form-label">Nom Complet:</label>
-		<div class="col-sm-8">
-			<input type="text" class="form-control" id="nom" name="nom" data-inputmask="'alias': 'nom'"
-				   autocomplete="off" required />
-		</div>
+            <label for="nom" class="col-sm-4 col-form-label">Nom Complet:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="nom" name="nom" data-inputmask="'alias': 'nom'"
+                       autocomplete="off" required/>
+            </div>
 
-		<label for="edat" class="col-sm-4 col-form-label">Edat:</label>
-		<div class="col-sm-8">
-			<input type="number" class="form-control" id="edat" name="edat" data-inputmask="'alias': 'edat'"
-				   autocomplete="off" required />
-		</div>
+            <label for="edat" class="col-sm-4 col-form-label">Edat:</label>
+            <div class="col-sm-8">
+                <input type="number" class="form-control" id="edat" name="edat" data-inputmask="'alias': 'edat'"
+                       autocomplete="off" required/>
+            </div>
 
-		<label for="correu" class="col-sm-4 col-form-label">Correu Electronic:</label>
-		<div class="col-sm-8">
-			<input type="email" class="form-control" id="correu" name="correu" data-inputmask="'alias': 'correu'"
-				   autocomplete="off" required />
-		</div>
+            <label for="correu" class="col-sm-4 col-form-label">Correu Electronic:</label>
+            <div class="col-sm-8">
+                <input type="email" class="form-control" id="correu" name="correu" data-inputmask="'alias': 'correu'"
+                       autocomplete="off" required/>
+            </div>
 
-		<label for="telefon_movil" class="col-sm-4 col-form-label">Telefon Mobil:</label>
-		<div class="col-sm-8">
-			<input type="number" class="form-control" id="telefon_movil" name="telefon_movil" data-inputmask="'alias': 'telefon_movil'"
-				   autocomplete="off" required />
-		</div>
+            <label for="telefon_movil" class="col-sm-4 col-form-label">Telefon Mobil:</label>
+            <div class="col-sm-8">
+                <input type="number" class="form-control" id="telefon_movil" name="telefon_movil"
+                       data-inputmask="'alias': 'telefon_movil'"
+                       autocomplete="off" required/>
+            </div>
 
-		<input type="hidden" class="form-control" id="data_compra" name="data_compra" data-inputmask="'alias': 'data_compra'" autocomplete="off" required/>
-
-
-		<button type="submit" class="btn btn-primary"
-				style="margin-top: 10px;" onclick="document.getElementById('inputText').value = generateRandomString(10);">Comprar Ticket</button>
-	</form>
-
-
-	</th:block>
+            <input type="hidden" class="form-control" id="data_compra" name="data_compra"
+                   data-inputmask="'alias': 'data_compra'" autocomplete="off" required/>
 
 
-
-	<th:block th:unless="${#strings.isEmpty(text)}">
-		<div class="mt-5" id="qrCodeContainer">
-			<div>
-				<h3>
-					Token: <span th:text="${text}"></span>
-				</h3>
-				<img th:src="${'data:image/png;base64,' + qrcode}"
-					 alt="GeneratedQRCode" class="img-fluid rounded" id="qrCodeImage">
-			</div>
-			<div>
-				<button class="btn btn-primary" id="qrCodeDownload" style="margin-top: 10px;" onclick="window.location.href='/'"> Download </button>
-
-				<br>
-
-				<br>
-
-				<button class="btn btn-primary" onclick="printTicket()">Imprimir Ticket</button>
-			</div>
+            <button type="submit" class="btn btn-primary"
+                    style="margin-top: 10px;"
+                    onclick="document.getElementById('inputText').value = generateRandomString(10);">Comprar Ticket
+            </button>
+        </form>
 
 
-		</div>
-	</th:block>
+    </th:block>
+
+
+    <th:block th:unless="${#strings.isEmpty(text)}">
+        <div class="mt-5" id="qrCodeContainer">
+            <div>
+                <h3>
+                    Token: <span th:text="${text}"></span>
+                </h3>
+                <img th:src="${'data:image/png;base64,' + qrcode}"
+                     alt="GeneratedQRCode" class="img-fluid rounded" id="qrCodeImage">
+            </div>
+            <div>
+                <button class="btn btn-primary" id="qrCodeDownload" style="margin-top: 10px;"
+                        onclick="window.location.href='/'"> Download
+                </button>
+
+                <br>
+
+                <br>
+
+                <button class="btn btn-primary" onclick="printTicket()">Imprimir Ticket</button>
+            </div>
+
+
+        </div>
+    </th:block>
 
 </div>
 
 <script>
-	// Obtener la fecha actual en el formato YYYY-MM-DD
-	var data = new Date().toISOString().split('T')[0];
-	document.getElementById('data_compra').value = data;
+    // Obtener la fecha actual en el formato YYYY-MM-DD
+    var data = new Date().toISOString().split('T')[0];
+    document.getElementById('data_compra').value = data;
 </script>
 
 <script>
-	document.getElementById('qrCodeDownload').addEventListener('click',
-			function() {
-				var imageElement = document.querySelector('#qrCodeImage');
-				var imageUrl = imageElement.src;
+    document.getElementById('qrCodeDownload').addEventListener('click',
+        function () {
+            var imageElement = document.querySelector('#qrCodeImage');
+            var imageUrl = imageElement.src;
 
-				fetch(imageUrl).then(response => response.blob()).then(blob => {
-					var link = document.createElement('a');
-					link.href = URL.createObjectURL(blob);
-					link.download = 'QRCode.jpg';
-					document.body.appendChild(link);
-					link.click();
-				});
-			});
+            fetch(imageUrl).then(response => response.blob()).then(blob => {
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'QRCode.jpg';
+                document.body.appendChild(link);
+                link.click();
+            });
+        });
 </script>
 <script>
 
-	function printTicket() {
-		var imgSrc = document.getElementById('qrCodeImage').src;
-		var printWindow = window.open('', '_blank');
-		printWindow.document.write('<img src="' + imgSrc + '" style="max-width:100%;">');
-		printWindow.document.close();
-		printWindow.print();
-	}
+    function printTicket() {
+        var imgSrc = document.getElementById('qrCodeImage').src;
+        var printWindow = window.open('', '_blank');
+
+        var htmlContent = `
+        <html>
+            <head>
+                <title>Ticket</title>
+            </head>
+            <body style="margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
+
+                <img src="${imgSrc}" style="max-width: 100%; max-height: 100%;">
+            </body>
+        </html>
+    `;
+
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+        printWindow.print();
+    }
 
 </script>
-
-
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.6/dist/umd/popper.min.js"
-		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-		crossorigin="anonymous"></script>
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.6/dist/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
 <script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-		crossorigin="anonymous"></script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
