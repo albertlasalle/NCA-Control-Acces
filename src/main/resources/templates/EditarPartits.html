@@ -48,7 +48,7 @@
 
 <div class="container-sm mt-5" style="max-width: 75%;">
 
-    <form action="/actualitzar/partit/" method="post" th:object="${partit}">
+    <form action="/actualitzar/partit" method="post" th:object="${partit}">
 
         <label for="nomPartit" class="col-sm-4 col-form-label">Nom del Partit:</label>
         <div class="col-sm-8">
@@ -81,9 +81,9 @@
                    autocomplete="off" th:field="*{horaInici}"  required />
         </div>
 
-        <label for="horaFi" class="col-sm-4 col-form-label">Selecciona l'Hora que acaba:</label>
+        <label for="horaAcaba" class="col-sm-4 col-form-label">Selecciona l'Hora que acaba:</label>
         <div class="col-sm-8">
-            <input type="time" class="form-control" id="horaFi" name="horaFi" data-inputmask="'alias': 'horaFi'"
+            <input type="time" class="form-control" id="horaAcaba" name="horaAcaba" data-inputmask="'alias': 'horaFi'"
                    autocomplete="off" th:field="*{horaAcaba}"  required  />
         </div>
 
