@@ -27,8 +27,8 @@
                 </p>
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5>Leather Bag</h5>
-                        <p class="lead">10.00€</p>
+                        <h5 th:text="'Partit: '+${nomPartit}"></h5>
+                        <p class="lead" th:text= "'Preu: '+${preu}+'€'"></p>
                     </div>
                 </div>
                 <form action="/#" id="payment-form" method="post">

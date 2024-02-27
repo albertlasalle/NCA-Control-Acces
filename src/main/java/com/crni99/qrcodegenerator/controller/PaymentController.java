@@ -18,11 +18,12 @@ public class PaymentController {
     @Autowired
     private StripeService stripeService;
 
-    public PaymentController(StripeService stripeService) {
+    private MainController mainController;
+
+    public PaymentController(StripeService stripeService, MainController mainController) {
         this.stripeService = stripeService;
+        this.mainController = mainController;
     }
-
-
 
     @GetMapping("/subscription")
     public String subscriptionPage(Model model) {
@@ -34,6 +35,8 @@ public class PaymentController {
     @GetMapping("/charge")
     public String chargePage(Model model) {
         model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
+        model.addAttribute("preu", mainController.preuE);
+        model.addAttribute("nomPartit", mainController.nomPartit);
         return "charge";
     }
 
@@ -99,7 +102,7 @@ public class PaymentController {
         }
 
         //create charge
-        String chargeId = stripeService.createCharge(email, token, 555); // amount in cents (x.xx)
+        String chargeId = stripeService.createCharge(email, token, mainController.preu); // amount in cents (x.xx)
         if (chargeId == null) {
             return new Response(false, "An error occurred while trying to create a charge.");
         }

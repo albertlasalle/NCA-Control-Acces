@@ -241,15 +241,23 @@ public class MainController {
         return "ComprarTicket";
     }
 
-
     public String TokenCompra;
 
+    public int preuE;
+    public int preu;
+
+    public String nomPartit;
 
     @GetMapping("/comprar/partit/{id}")
     public String comprarPartit(@PathVariable("id") int id, Model model) {
         Partits partit = partitsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid partit Id:" + id));
         model.addAttribute("idPartit", id);
         idPartit = partit.getId();
+        preuE = partit.getPreu();
+
+        preu = preuE*100;
+
+        nomPartit = partit.getPartit();
         return "ComprarTicket";
     }
 
@@ -281,12 +289,11 @@ public class MainController {
                     return "redirect:" + redirectUrl;
                 }
 
-
                 return "admin";
-
 
             }
         }
+
         return "redirect:/admin";
     }
 
