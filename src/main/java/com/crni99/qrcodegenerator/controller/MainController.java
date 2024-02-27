@@ -44,6 +44,7 @@ public class MainController {
         this.repository = repository;
         this.partitsRepository = partitsRepository;
         this.AdminRepository = AdminRepository;
+
     }
 
     @Autowired
@@ -203,13 +204,15 @@ public class MainController {
 
     }
 
+    public String qrCode;
+
     @PostMapping("/generate")
-    public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil, @RequestParam("nom") String nom, @RequestParam("edat") int edat) {
+    public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil, @RequestParam("nom") String nom, @RequestParam("edat") int edat, HttpSession session) {
         if (text == null || text.isBlank() || text.isEmpty()) {
             return "redirect:/";
         }
 
-        String qrCode = qrCodeService.getQRCode(text);
+        qrCode = qrCodeService.getQRCode(text);
         model.addAttribute("text", text);
         model.addAttribute("qrcode", qrCode);
 
@@ -224,8 +227,22 @@ public class MainController {
         tickets.setDataCompra(data_compra);
         repository.save(tickets);
 
+        TokenCompra = text;
+
+        return "redirect:/charge";
+
+        //return "ComprarTicket";
+    }
+
+    @GetMapping("/ComprarTicket")
+    public String ComprarTicket(Model model) {
+        model.addAttribute("text", TokenCompra);
+        model.addAttribute("qrcode", qrCode);
         return "ComprarTicket";
     }
+
+
+    public String TokenCompra;
 
 
     @GetMapping("/comprar/partit/{id}")
@@ -350,6 +367,7 @@ public class MainController {
     public String error() {
         return "error";
     }
+
 
 
 }
