@@ -60,16 +60,25 @@
                         </div>
                     </div>
 
-
                 </form>
-                <p class="mt-5 text-muted">
-                    <small>An example project by <a th:href="@{https://attacomsian.com}" target="_blank">Atta</a>.
-                    </small>
-                </p>
+
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    // Deshabilitar el botón después de enviar el formulario para evitar múltiples envíos
+    document.getElementById("payment-form").addEventListener("submit", function(event) {
+        var submitButton = document.getElementById("submitButton");
+        if (!submitButton.disabled) {
+            submitButton.disabled = true;
+            submitButton.innerHTML = "Processing..."; // Cambiar el texto del botón si lo deseas
+        } else {
+            event.preventDefault(); // Evitar múltiples envíos si el botón ya está deshabilitado
+        }
+    });
+</script>
 
 <!--custom javascript for handling subscription-->
 <script>
@@ -89,12 +98,14 @@
 
         // Handle real-time validation errors from the card Element.
         card.addEventListener('change', function (event) {
-            var displayError = document.getElementById('card-errors');
+
             var displayError = document.getElementById('card-errors');
             if (event.error) {
                 displayError.textContent = event.error.message;
+                document.getElementById("submitButton").disabled = true;
             } else {
                 displayError.textContent = '';
+                document.getElementById("submitButton").disabled = false;
             }
         });
 
@@ -122,7 +133,9 @@
                         {email: email, token: token},
                         function (data) {
                             alert(data.details);
-                            window.location.href = '/ComprarTicket';
+                            if(data.details === "Pagament completat satisfactoriament!"){
+                                window.location.href = '/ComprarTicket';
+                            }
                         }, 'json');
 
                 }

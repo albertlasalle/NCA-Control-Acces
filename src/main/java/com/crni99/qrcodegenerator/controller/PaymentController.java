@@ -104,12 +104,12 @@ public class PaymentController {
         //create charge
         String chargeId = stripeService.createCharge(email, token, mainController.preu); // amount in cents (x.xx)
         if (chargeId == null) {
-            return new Response(false, "An error occurred while trying to create a charge.");
+            return new Response(false, "Error. El pagament no s'ha realitzat correctament.");
         }
 
         // You may want to store charge id along with order information
 
-        return new Response(true, "La teva compra s'ha completat satisfactoriament!");
+        return new Response(true, "Pagament completat satisfactoriament!");
 
     }
 
