@@ -29,6 +29,7 @@
                     <div class="card-body">
                         <h5 th:text="'Partit: '+${nomPartit}"></h5>
                         <p class="lead" th:text= "'Preu: '+${preu}+'€'"></p>
+                        <p class="lead" style="font-size: 1.0em;" th:text= "${nomCarrer}+', '+${poblacio}"></p>
                     </div>
                 </div>
                 <form action="/#" id="payment-form" method="post">
