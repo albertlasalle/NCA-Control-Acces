@@ -5,11 +5,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
 
 import com.google.zxing.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
@@ -26,6 +26,7 @@ public class QRCodeService {
 
 	private static int backgroundColor = 0xFF000002;
 	private static int paintColor = 0xFFF8F9FA;
+
 
 	public String getQRCode(String text) {
 		byte[] image = new byte[0];
@@ -47,6 +48,7 @@ public class QRCodeService {
 
 		MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream, matrixToImageConfig);
 		byte[] pngData = pngOutputStream.toByteArray();
+
 		return pngData;
 	}
 

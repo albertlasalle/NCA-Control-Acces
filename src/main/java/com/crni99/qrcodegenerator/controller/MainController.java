@@ -8,6 +8,7 @@ import com.crni99.qrcodegenerator.model.Partits;
 import com.crni99.qrcodegenerator.model.Tickets;
 import com.crni99.qrcodegenerator.service.QRCodeService;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,9 +37,12 @@ public class MainController {
 
     private final AdminRepository AdminRepository;
 
+
+
     public static int idPartit;
 
 
+    @Autowired
     public MainController(QRCodeService qrCodeService, TicketsRepository repository, PartitsRepository partitsRepository, AdminRepository AdminRepository) {
         this.qrCodeService = qrCodeService;
         this.repository = repository;
@@ -55,6 +59,7 @@ public class MainController {
     public String url;
 
     public int idPartitEditar;
+
 
 
     @GetMapping("/")
@@ -239,6 +244,7 @@ public class MainController {
     public String ComprarTicket(Model model) {
         model.addAttribute("text", TokenCompra);
         model.addAttribute("qrcode", qrCode);
+
         return "ComprarTicket";
     }
 
@@ -268,6 +274,8 @@ public class MainController {
         nomPoblacio = partit.getPoblacio();
 
         nomPartit = partit.getPartit();
+
+
         return "ComprarTicket";
     }
 
