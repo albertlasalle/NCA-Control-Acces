@@ -142,7 +142,7 @@ public class MainController {
             String error = "No s'ha pogut esborrar el partit amb codi: " + id;
             return "redirect:/partits?error=" + URLEncoder.encode(error, StandardCharsets.UTF_8);
         }
-        return "VistaEditarPartits";
+        return "redirect:/editarPartits";
     }
 
     @GetMapping("/editar/partit/{id}")
