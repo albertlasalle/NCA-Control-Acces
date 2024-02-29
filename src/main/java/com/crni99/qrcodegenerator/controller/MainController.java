@@ -250,6 +250,10 @@ public class MainController {
 
     public String nomPartit;
 
+    public String NomCarrer;
+
+    public String nomPoblacio;
+
     @GetMapping("/comprar/partit/{id}")
     public String comprarPartit(@PathVariable("id") int id, Model model) {
         Partits partit = partitsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid partit Id:" + id));
@@ -259,7 +263,9 @@ public class MainController {
 
         preuCentims = (int) Math.round(preu*100);
 
+        NomCarrer = partit.getCarrer();
 
+        nomPoblacio = partit.getPoblacio();
 
         nomPartit = partit.getPartit();
         return "ComprarTicket";

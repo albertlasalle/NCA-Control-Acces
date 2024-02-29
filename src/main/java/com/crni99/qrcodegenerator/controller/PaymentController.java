@@ -37,6 +37,8 @@ public class PaymentController {
         model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
         model.addAttribute("preu", mainController.preu);
         model.addAttribute("nomPartit", mainController.nomPartit);
+        model.addAttribute("nomCarrer", mainController.NomCarrer);
+        model.addAttribute("poblacio", mainController.nomPoblacio);
         return "charge";
     }
 
