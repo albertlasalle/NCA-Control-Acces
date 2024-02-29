@@ -15,10 +15,13 @@ public class Partits {
     private String partit;
     @Basic
     @Column(name = "preu")
-    private int preu;
+    private double preu;
     @Basic
     @Column(name = "poblacio")
     private String poblacio;
+    @Basic
+    @Column(name = "carrer")
+    private String carrer;
     @Basic
     @Column(name = "dia")
     private Date dia;
@@ -47,11 +50,11 @@ public class Partits {
         this.partit = partit;
     }
 
-    public int getPreu() {
+    public double getPreu() {
         return preu;
     }
 
-    public void setPreu(int preu) {
+    public void setPreu(double preu) {
         this.preu = preu;
     }
 
@@ -61,6 +64,14 @@ public class Partits {
 
     public void setPoblacio(String poblacio) {
         this.poblacio = poblacio;
+    }
+
+    public String getCarrer() {
+        return carrer;
+    }
+
+    public void setCarrer(String carrer) {
+        this.carrer = carrer;
     }
 
     public Date getDia() {
@@ -95,9 +106,10 @@ public class Partits {
         Partits partits = (Partits) o;
 
         if (id != partits.id) return false;
-        if (preu != partits.preu) return false;
+        if (Double.compare(preu, partits.preu) != 0) return false;
         if (partit != null ? !partit.equals(partits.partit) : partits.partit != null) return false;
         if (poblacio != null ? !poblacio.equals(partits.poblacio) : partits.poblacio != null) return false;
+        if (carrer != null ? !carrer.equals(partits.carrer) : partits.carrer != null) return false;
         if (dia != null ? !dia.equals(partits.dia) : partits.dia != null) return false;
         if (horaInici != null ? !horaInici.equals(partits.horaInici) : partits.horaInici != null) return false;
         if (horaAcaba != null ? !horaAcaba.equals(partits.horaAcaba) : partits.horaAcaba != null) return false;
@@ -107,10 +119,14 @@ public class Partits {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result;
+        long temp;
+        result = id;
         result = 31 * result + (partit != null ? partit.hashCode() : 0);
-        result = 31 * result + preu;
+        temp = Double.doubleToLongBits(preu);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (poblacio != null ? poblacio.hashCode() : 0);
+        result = 31 * result + (carrer != null ? carrer.hashCode() : 0);
         result = 31 * result + (dia != null ? dia.hashCode() : 0);
         result = 31 * result + (horaInici != null ? horaInici.hashCode() : 0);
         result = 31 * result + (horaAcaba != null ? horaAcaba.hashCode() : 0);

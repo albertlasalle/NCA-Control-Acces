@@ -157,13 +157,14 @@ public class MainController {
     }
 
     @PostMapping("/actualitzar/partit")
-    public String actualitzarPartit(@RequestParam("partit") String partit, @RequestParam("preu") int preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaAcaba") String horaAcaba, Partits partits) {
+    public String actualitzarPartit(@RequestParam("partit") String partit, @RequestParam("preu") double preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaAcaba") String horaAcaba, @RequestParam("carrer") String carrer, Partits partits) {
 
 
         partits.setId(idPartitEditar);
         partits.setPartit(partit);
         partits.setPreu(preu);
         partits.setPoblacio(poblacio);
+        partits.setCarrer(carrer);
         partits.setDia(dia);
         partits.setHoraInici(horaInici);
         partits.setHoraAcaba(horaAcaba);
@@ -243,8 +244,9 @@ public class MainController {
 
     public String TokenCompra;
 
-    public int preuE;
-    public int preu;
+    public double preu;
+
+    public int preuCentims;
 
     public String nomPartit;
 
@@ -253,9 +255,11 @@ public class MainController {
         Partits partit = partitsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid partit Id:" + id));
         model.addAttribute("idPartit", id);
         idPartit = partit.getId();
-        preuE = partit.getPreu();
+        preu = partit.getPreu();
 
-        preu = preuE*100;
+        preuCentims = (int) Math.round(preu*100);
+
+
 
         nomPartit = partit.getPartit();
         return "ComprarTicket";
@@ -299,7 +303,7 @@ public class MainController {
 
 
     @PostMapping("/createPartits")
-    public String createPartit(@RequestParam("nomPartit") String nomPartit, @RequestParam("preu") int preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, Partits partits) {
+    public String createPartit(@RequestParam("nomPartit") String nomPartit, @RequestParam("preu") double preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, @RequestParam("carrer") String carrer, Partits partits) {
         if (nomPartit == null || nomPartit.isBlank() || nomPartit.isEmpty()) {
             return "redirect:/partits";
         }
@@ -310,6 +314,7 @@ public class MainController {
         partits.setPartit(nomPartit);
         partits.setPreu(preu);
         partits.setPoblacio(poblacio);
+        partits.setCarrer(carrer);
         partits.setDia(dia);
         partits.setHoraInici(horaInici);
         partits.setHoraAcaba(horaFi);

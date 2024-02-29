@@ -35,7 +35,7 @@ public class PaymentController {
     @GetMapping("/charge")
     public String chargePage(Model model) {
         model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
-        model.addAttribute("preu", mainController.preuE);
+        model.addAttribute("preu", mainController.preu);
         model.addAttribute("nomPartit", mainController.nomPartit);
         return "charge";
     }
@@ -102,7 +102,7 @@ public class PaymentController {
         }
 
         //create charge
-        String chargeId = stripeService.createCharge(email, token, mainController.preu); // amount in cents (x.xx)
+        String chargeId = stripeService.createCharge(email, token, mainController.preuCentims); // amount in cents (x.xx)
         if (chargeId == null) {
             return new Response(false, "Error. El pagament no s'ha realitzat correctament.");
         }
