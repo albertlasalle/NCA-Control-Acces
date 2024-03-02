@@ -84,6 +84,9 @@
 <!--custom javascript for handling subscription-->
 <script>
     $(function () {
+
+
+
         var API_KEY = $('#api-key').val();
         // Create a Stripe client.
         var stripe = Stripe(API_KEY);
@@ -129,13 +132,19 @@
                     // Send the token to your server.
                     var token = result.token.id;
                     var email = $('#email').val();
+                    var pagado = "";
                     $.post(
                         "/create-charge",
                         {email: email, token: token},
                         function (data) {
+
                             alert(data.details);
                             if(data.details === "Pagament completat satisfactoriament!"){
-                                window.location.href = '/ComprarTicket';
+
+                                pagado = Math.random().toString(36).substring(2, 17).toUpperCase();
+
+                                window.location.href = '/ComprarTicket/payment/'+pagado;
+
                             }
                         }, 'json');
 

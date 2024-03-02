@@ -9,7 +9,6 @@ import java.util.Base64;
 import javax.imageio.ImageIO;
 
 import com.google.zxing.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;

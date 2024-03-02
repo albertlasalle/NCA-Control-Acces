@@ -95,6 +95,8 @@ public class PaymentController {
         }
     }
 
+    public String chargeId;
+
     @PostMapping("/create-charge")
     public @ResponseBody
     Response createCharge(String email, String token) {
@@ -104,7 +106,7 @@ public class PaymentController {
         }
 
         //create charge
-        String chargeId = stripeService.createCharge(email, token, mainController.preuCentims); // amount in cents (x.xx)
+        chargeId = stripeService.createCharge(email, token, mainController.preuCentims); // amount in cents (x.xx)
         if (chargeId == null) {
             return new Response(false, "Error. El pagament no s'ha realitzat correctament.");
         }

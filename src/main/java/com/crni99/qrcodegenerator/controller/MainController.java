@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -36,7 +37,6 @@ public class MainController {
     private final PartitsRepository partitsRepository;
 
     private final AdminRepository AdminRepository;
-
 
 
     public static int idPartit;
@@ -59,7 +59,6 @@ public class MainController {
     public String url;
 
     public int idPartitEditar;
-
 
 
     @GetMapping("/")
@@ -212,6 +211,7 @@ public class MainController {
 
     public String qrCode;
 
+
     @PostMapping("/generate")
     public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil, @RequestParam("nom") String nom, @RequestParam("edat") int edat, HttpSession session) {
         if (text == null || text.isBlank() || text.isEmpty()) {
@@ -235,13 +235,26 @@ public class MainController {
 
         TokenCompra = text;
 
+
         return "redirect:/charge";
 
         //return "ComprarTicket";
     }
 
-    @GetMapping("/ComprarTicket")
-    public String ComprarTicket(Model model) {
+    private static HashMap<String, Boolean> valoresAleatoriosUtilizados = new HashMap<>();
+
+    @GetMapping("/ComprarTicket/payment/{pagado}")
+    public String ComprarTicket(@PathVariable("pagado") String pagado, Model model) {
+        // Verificar si el valor aleatorio ya ha sido utilizado
+        if (valoresAleatoriosUtilizados.containsKey(pagado) && valoresAleatoriosUtilizados.get(pagado)) {
+            // Si ya ha sido utilizado, redirigir a una página de error o hacer alguna otra acción
+            return "error"; // Página de error
+        }
+
+        // Si el valor aleatorio no ha sido utilizado, marcarlo como utilizado
+        valoresAleatoriosUtilizados.put(pagado, true);
+
+        // Aquí puedes continuar con el procesamiento normal del enlace
         model.addAttribute("text", TokenCompra);
         model.addAttribute("qrcode", qrCode);
 
@@ -267,7 +280,7 @@ public class MainController {
         idPartit = partit.getId();
         preu = partit.getPreu();
 
-        preuCentims = (int) Math.round(preu*100);
+        preuCentims = (int) Math.round(preu * 100);
 
         NomCarrer = partit.getCarrer();
 
@@ -393,7 +406,6 @@ public class MainController {
     public String error() {
         return "error";
     }
-
 
 
 }
