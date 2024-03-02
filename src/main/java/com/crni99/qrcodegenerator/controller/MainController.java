@@ -254,7 +254,7 @@ public class MainController {
         // Si el valor aleatorio no ha sido utilizado, marcarlo como utilizado
         valoresAleatoriosUtilizados.put(pagado, true);
 
-        // Aquí puedes continuar con el procesamiento normal del enlace
+        // Continuar con el resto del código
         model.addAttribute("text", TokenCompra);
         model.addAttribute("qrcode", qrCode);
 
