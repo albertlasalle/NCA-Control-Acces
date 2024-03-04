@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
@@ -139,12 +140,12 @@ public class MainController {
     }
 
     @GetMapping("/esborrar/partit/{id}")
-    public String esborrarPartit(@PathVariable("id") int id) {
+    public String esborrarPartit(@PathVariable("id") int id) throws UnsupportedEncodingException {
         try {
             partitsRepository.deleteById(id);
         } catch (Exception e) {
             String error = "No s'ha pogut esborrar el partit amb codi: " + id;
-            return "redirect:/partits?error=" + URLEncoder.encode(error, StandardCharsets.UTF_8);
+            return "redirect:/partits?error=" + URLEncoder.encode(error, "UTF-8");
         }
         return "redirect:/editarPartits";
     }
@@ -214,7 +215,7 @@ public class MainController {
 
     @PostMapping("/generate")
     public String generateQRCode(@RequestParam("text") String text, Model model, Tickets tickets, @RequestParam("data_compra") Date data_compra, @RequestParam("id_partit") int idPartit, @RequestParam("dni_usuari") String dniUsuari, @RequestParam("correu") String correu, @RequestParam("telefon_movil") int telefonMovil, @RequestParam("nom") String nom, @RequestParam("edat") int edat, HttpSession session) {
-        if (text == null || text.isBlank() || text.isEmpty()) {
+        if (text == null || text.trim().isEmpty() || text.isEmpty()) {
             return "redirect:/";
         }
 
@@ -300,10 +301,10 @@ public class MainController {
 
     @PostMapping("/admin")
     public String loginAdmin(@RequestParam("user") String usuari, @RequestParam("password") String contrasenya) {
-        if (usuari == null || usuari.isBlank() || usuari.isEmpty()) {
+        if (usuari == null || usuari.trim().isEmpty() || usuari.isEmpty()) {
             return "redirect:/admin";
         }
-        if (contrasenya == null || contrasenya.isBlank() || contrasenya.isEmpty()) {
+        if (contrasenya == null || contrasenya.trim().isEmpty() || contrasenya.isEmpty()) {
             return "redirect:/admin";
         }
         List<Admin> admins = AdminRepository.findAll();
@@ -331,7 +332,7 @@ public class MainController {
 
     @PostMapping("/createPartits")
     public String createPartit(@RequestParam("nomPartit") String nomPartit, @RequestParam("preu") double preu, @RequestParam("poblacio") String poblacio, @RequestParam("dia") Date dia, @RequestParam("horaInici") String horaInici, @RequestParam("horaFi") String horaFi, @RequestParam("carrer") String carrer, Partits partits) {
-        if (nomPartit == null || nomPartit.isBlank() || nomPartit.isEmpty()) {
+        if (nomPartit == null || nomPartit.trim().isEmpty() || nomPartit.isEmpty()) {
             return "redirect:/partits";
         }
 
