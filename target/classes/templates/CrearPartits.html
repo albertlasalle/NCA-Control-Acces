@@ -65,11 +65,24 @@
     document.addEventListener('DOMContentLoaded', function () {
         const navbarToggler = document.querySelector('.navbar-toggler');
         const dropdownMenu = document.querySelector('#dropdownMenu');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
 
         navbarToggler.addEventListener('click', function () {
             if (dropdownMenu.style.display === 'none') {
                 dropdownMenu.style.display = 'block';
             } else {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+
+        // Oculta el menú desplegable cuando se cierra la barra de navegación
+        navbarCollapse.addEventListener('hide.bs.collapse', function () {
+            dropdownMenu.style.display = 'none';
+        });
+
+        // Oculta el menú desplegable cuando la ventana cambia de tamaño
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 991) {
                 dropdownMenu.style.display = 'none';
             }
         });
