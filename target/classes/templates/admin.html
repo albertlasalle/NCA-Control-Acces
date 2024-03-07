@@ -50,15 +50,58 @@
 
 
         </div>
-    </nav>
-</div>
 
-<div class="container">
+    </nav>
+
+    <!-- Menú desplegable -->
+
+    <div class="container" id="dropdownMenu" style="max-width: 75%; display: none;">
+        <div class="row">
+            <div class="col">
+                <ul class="list-group" style="list-style: none; padding: 0;">
+                    <li><a class="nav-link" href="/logout">Tickets</a></li>
+                    <br>
+                    <li><a class="nav-link" href="/decode">Validar Entrades</a></li>
+                    <br>
+                    <li><a class="nav-link" href="/partits">Crear Partits</a></li>
+                    <br>
+                    <li><a class="nav-link" href="/editarPartits">Modificar Entrades</a></li>
+                    <br>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del menú desplegable -->
+
+    <br>
     Benvingut Admin!
     <br>
     <br>
     <button type="button" class="btn btn-primary" onclick="location.href='/logout'">Tancar Sessió</button>
+
 </div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const dropdownMenu = document.querySelector('#dropdownMenu');
+
+        navbarToggler.addEventListener('click', function () {
+            if (dropdownMenu.style.display === 'none') {
+                dropdownMenu.style.display = 'block';
+            } else {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
+
+
 
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

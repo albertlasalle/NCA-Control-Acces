@@ -27,26 +27,48 @@
 <body>
 <div class="container" style="max-width: 75%;">
 	<nav class="navbar navbar-expand-lg">
-		<a class="navbar-brand" href="#"> <img src="../img/favicon.png"
-											   width="30" height="30"> Entrades Disponibles
+		<a class="navbar-brand" href="#">
+			<img src="../img/favicon.png" width="30" height="30"> Entrades Disponibles
 		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNav" aria-controls="navbarNav"
-				aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav mr-auto">
-
 				<li class="nav-item"><a class="nav-link" href="/LoginAdmin">Admin</a></li>
-
-
 			</ul>
-
-
 		</div>
 	</nav>
 </div>
+
+<!-- Menú desplegable -->
+<div class="container" id="dropdownMenu" style="max-width: 75%; display: none;">
+	<div class="row">
+		<div class="col">
+			<ul class="list-group" style="list-style: none; padding: 0;">
+				<li><a class="nav-link" href="/LoginAdmin">Admin</a></li>
+				<br>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- Fin del menú desplegable -->
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const navbarToggler = document.querySelector('.navbar-toggler');
+		const dropdownMenu = document.querySelector('#dropdownMenu');
+
+		navbarToggler.addEventListener('click', function () {
+			if (dropdownMenu.style.display === 'none') {
+				dropdownMenu.style.display = 'block';
+			} else {
+				dropdownMenu.style.display = 'none';
+			}
+		});
+	});
+</script>
+
 
 <div class="container">
 	<h2>Llista de Partits</h2>
