@@ -44,6 +44,37 @@
     </nav>
 </div>
 
+<!-- Menú desplegable -->
+<div class="container" id="dropdownMenu" style="max-width: 75%; display: none;">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group" style="list-style: none; padding: 0;">
+                <li><a class="nav-link" href="/logout">Tickets</a></li>
+                <br>
+                <li><a class="nav-link" href="/decode">Validar Entrades</a></li>
+                <br>
+                <li><a class="nav-link" href="/editarPartits">Modificar Partits</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Fin del menú desplegable -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const dropdownMenu = document.querySelector('#dropdownMenu');
+
+        navbarToggler.addEventListener('click', function () {
+            if (dropdownMenu.style.display === 'none') {
+                dropdownMenu.style.display = 'block';
+            } else {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 <div class="container-sm mt-5" style="max-width: 75%;">
 
     <form action="/actualitzar/partit" method="post" th:object="${partit}">
