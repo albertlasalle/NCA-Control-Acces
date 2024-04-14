@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="u346867692_partits@srv965.hstgr.io" uuid="0092d441-a0c2-4ae6-ad95-94aaa2d3a36d">
-      <driver-ref>mariadb</driver-ref>
+    <data-source source="LOCAL" name="centre_esportiu@localhost" uuid="9f114b8c-c605-4714-8cba-02e6ac93aceb">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://srv965.hstgr.io:3306/u346867692_partits</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/centre_esportiu</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
